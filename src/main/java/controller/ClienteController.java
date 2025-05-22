@@ -11,6 +11,7 @@ import model.Pedido;
  * @author Usuario
  */
 public class ClienteController implements ICommonOperator<Cliente> {
+    
     private ArrayList<Cliente> lista = new ArrayList<>();
 
     @Override
