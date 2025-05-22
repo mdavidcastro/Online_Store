@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package controller;
 
 import interfaces.ICommonOperator;
 import java.util.ArrayList;
+import model.Pedido;
 import model.Producto;
 
 /**
@@ -15,7 +13,41 @@ import model.Producto;
 public class ProductoController implements ICommonOperator<Producto> {
 
     private ArrayList<Producto> lista = new ArrayList<>();
-
+    
+    public boolean hayStockDisponible(String id, int cantidadSolicida){
+        int idx = find(id);
+        if(idx != -1){
+            return lista.get(idx).hayStockDiponible(cantidadSolicida);
+        }
+        return false;
+     }
+    public boolean disminuirStock(String id, int cantidad){
+        int idx = find(id);
+        if(idx != -1){
+            try{
+                lista.get(idx).disminuirStock(cantidad);
+                return true;
+            } catch(IllegalArgumentException e){
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    public boolean aumentarStock(String id, int cantidad){
+        int idx = find(id);
+        if(idx != -1){
+            try{
+                lista.get(idx).aumentarStock(cantidad);
+                return true;
+            }catch (IllegalArgumentException e){
+                return false;
+            }
+            
+        }
+        return false;
+    }
+    
     @Override
     public void execute() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -32,12 +64,17 @@ public class ProductoController implements ICommonOperator<Producto> {
 
     @Override
     public Producto search(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         for(Producto p : lista){
+            if(p.getId().equals(id)){
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override
     public ArrayList<Producto> toList() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return lista;
     }
 
     @Override
@@ -66,7 +103,6 @@ public class ProductoController implements ICommonOperator<Producto> {
             if (lista.get(i).getId().equals(id)) {
                 return i;
             }
-
         }
         return -1;
     }

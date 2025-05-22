@@ -56,7 +56,9 @@ public class Producto {
      */
     public void aumentarStock(int cantidad) {
         if (cantidad > 0) {
-            cantidadDisponible += cantidad;
+            cantidadDisponible += cantidad;     
+        }
+        else{
             throw new IllegalArgumentException("La cantidad a aumentar debe ser positiva.");
         }
     }

@@ -4,6 +4,7 @@ package controller;
 import interfaces.ICommonOperator;
 import java.util.ArrayList;
 import model.Cliente;
+import model.Pedido;
 
 /**
  *
@@ -14,7 +15,7 @@ public class ClienteController implements ICommonOperator<Cliente> {
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
@@ -28,12 +29,17 @@ public class ClienteController implements ICommonOperator<Cliente> {
 
     @Override
     public Cliente search(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         for(Cliente c : lista){
+            if(c.getId().equals(id)){
+                return c;
+            }
+        }
+        return null;
     }
 
     @Override
     public ArrayList<Cliente> toList() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return lista;
     }
 
     @Override
@@ -58,7 +64,14 @@ public class ClienteController implements ICommonOperator<Cliente> {
 
     @Override
     public int find(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getId().equals(id)) {
+                return i;
+            }
+
+        }
+        return -1;
+       
     }
 
 }

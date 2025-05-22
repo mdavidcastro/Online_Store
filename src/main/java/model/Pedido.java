@@ -35,9 +35,6 @@ public class Pedido {
         costoTotal();
     }
     
-    /**
-     * Recalcula el costo total del pedido, aplicando descuento si el cliente es especial.
-     */
     public double costoTotal() {
         
         double subtotal = 0.0;

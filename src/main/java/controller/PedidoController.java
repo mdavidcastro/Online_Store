@@ -4,6 +4,7 @@ package controller;
 import interfaces.ICommonOperator;
 import java.util.ArrayList;
 import model.Pedido;
+import model.Producto;
 
 /**
  *
@@ -15,6 +16,32 @@ public class PedidoController implements ICommonOperator <Pedido> {
     //tocar importar la vistaPedido
     private ArrayList<Pedido> lista = new ArrayList<>();
 
+    
+    public boolean agregarDetalleApedido(String idPedido, Producto producto, int cantidad){
+        int index = find(idPedido);
+        if(index != -1){
+            lista.get(index).agregarDetalle(producto, cantidad);
+            return true;
+        }
+        return false;
+    }
+    
+    public double obtenerCostoTotal(String idPedido){
+        int index = find(idPedido);
+        if( index != -1){
+            return lista.get(index).costoTotal();
+        }
+        return 0.0;
+    }
+    
+    public boolean avanzarEstadoPedido(String idPedido){
+        int index = find(idPedido);
+        if(index != -1){
+            return lista.get(index).avanzarEstado();
+        }
+        return false;
+      }
+    
     @Override
     public void execute() {
         
@@ -72,9 +99,7 @@ public class PedidoController implements ICommonOperator <Pedido> {
  
     @Override
     public ArrayList<Pedido> toList() {
-        
-        return null;
-        
+        return lista;        
     }
     
    
