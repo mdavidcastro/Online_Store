@@ -4,6 +4,7 @@ package view;
 import Utilidades.Util;
 import controller.ClienteController;
 import interfaces.IView;
+import java.util.ArrayList;
 import model.Cliente;
 
 /**
@@ -73,9 +74,18 @@ public class ClienteView implements IView {
 
     @Override
     public void mostrarLista() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        ArrayList<Cliente> clientes = clienteController.toList();
 
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+        } else {
+            System.out.println("\n--- Lista de Clientes ---");
+            for (Cliente cliente : clientes){ 
+                System.out.println(cliente);
+                System.out.println("-------------------------");
+            }
+        }
+    }
     @Override
     public void registrar() {
         System.out.println("Registrar un nuevo Cliente");
@@ -97,12 +107,62 @@ public class ClienteView implements IView {
 
     @Override
     public void actualizar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Actualizar usuario");
+        String id = Util.getLine("Ingrese su id");
+        Cliente cliente = clienteController.search(id);
+        if (cliente != null) {
+            System.out.println("El cliente existe!");
+            System.out.println("\n--- Datos actuales ---");
+            System.out.println(cliente);
+
+            System.out.println("-------");
+            System.out.println("Nombre: " + cliente.getNombre());
+            if (Util.getLine("¿Desea cambiar el nombre? (s/n): ").equalsIgnoreCase("s")) {
+                String nuevoNombre = Util.getLine("Nuevo nombre: ");
+                cliente.setNombre(nuevoNombre);
+            }
+            System.out.println("Direccion: " + cliente.getDireccion());
+            if (Util.getLine("¿Desea cambiar la direccion? (s/n): ").equalsIgnoreCase("s")) {
+                String nuevaDireccion = Util.getLine("Nuevo nombre: ");
+                cliente.setNombre(nuevaDireccion);
+            }
+            System.out.println("Nombre: " + cliente.getNombre());
+            if (Util.getLine("¿Desea cambiar el nombre? (s/n): ").equalsIgnoreCase("s")) {
+                String nuevoNombre = Util.getLine("Nuevo nombre: ");
+                cliente.setNombre(nuevoNombre);
+            }
+            System.out.println("Nombre: " + cliente.getNombre());
+            if (Util.getLine("¿Desea cambiar el nombre? (s/n): ").equalsIgnoreCase("s")) {
+                String nuevoNombre = Util.getLine("Nuevo nombre: ");
+                cliente.setNombre(nuevoNombre);
+            }
+            System.out.println("Nombre: " + cliente.getNombre());
+            if (Util.getLine("¿Desea cambiar el nombre? (s/n): ").equalsIgnoreCase("s")) {
+                String nuevoNombre = Util.getLine("Nuevo nombre: ");
+                cliente.setNombre(nuevoNombre);
+
+                boolean actualizado = clienteController.update(cliente);
+                System.out.println(actualizado ? "Cliente actualizado exitosamente." : "Error al actualizar cliente.");
+
+            } else {
+                System.out.println("Cliente no encontrado");
+            }
+
+        }
+
     }
 
     @Override
     public void eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        String id = Util.getLine("Ingrese el ID del cliente a eliminar:");
+        Cliente cliente = clienteController.search(id);
 
+        if (cliente != null) {
+            boolean eliminado = clienteController.delete(cliente);
+            System.out.println(eliminado ? "Cliente eliminado exitosamente." : "No se pudo eliminar el cliente.");
+        } else {
+            System.out.println("Cliente no encontrado.");
+        }
+
+    }
 }
